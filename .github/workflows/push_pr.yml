@@ -43,8 +43,6 @@ jobs:
       - name: Checking out code...
         id: checkout
         uses: actions/checkout@master
-        with:
-          ref: docs
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
@@ -52,10 +50,11 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: doc
-          args: --no-deps --document-private-items --target-dir docs_new
+          args: --no-deps --document-private-items --target-dir ../docs_new
       - run: |
+          git checkout docs
           rm -rf docs
-          mv docs_new docs
+          mv ../docs_new docs
           echo "<head><meta http-equiv=\"refresh\" content=\"0; URL=./doc/Elements_of_Programming_in_Rust/index.html\" /></head><body>hello</body>" >> ./docs/index.html
           git config user.name github-actions
           git config user.email github-actions@github.com
