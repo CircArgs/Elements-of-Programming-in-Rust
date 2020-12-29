@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+git config --global user.email ""
+git config --global user.name "CircArgs"
+
 eval "$(ssh-agent -s)"
 echo $DOCS_SSH >> sshkey
 chmod 400 sshkey
