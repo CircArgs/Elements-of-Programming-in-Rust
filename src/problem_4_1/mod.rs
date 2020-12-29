@@ -7,7 +7,6 @@
 //! Hint: Use a lookup table, but don't use 2^64 entries!
 
 use std::collections::HashMap;
-use std::hash::Hash;
 use std::marker::PhantomData;
 use std::mem::size_of;
 
