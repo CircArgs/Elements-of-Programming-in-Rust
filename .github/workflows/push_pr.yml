@@ -49,4 +49,4 @@ jobs:
         id: docs
         uses: ./.github/actions/documentation
         env:
-          SSH_KEY: $DOCS_SSH
+          SSH_KEY: ${{secrets.DOCS_SSH}}
