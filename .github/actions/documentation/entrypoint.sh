@@ -4,7 +4,9 @@ git config --global user.email ""
 git config --global user.name "CircArgs"
 
 eval "$(ssh-agent -s)"
+echo "-----BEGIN OPENSSH PRIVATE KEY-----" >> sshkey
 echo $DOCS_SSH >> sshkey
+echo "-----END OPENSSH PRIVATE KEY-----" >> sshkey
 chmod 400 sshkey
 ssh-add sshkey
 git clone --single-branch --branch docs git@github.com:CircArgs/Elements-of-Programming-in-Rust.git ./cloned
