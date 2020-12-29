@@ -6,7 +6,7 @@ LABEL "com.github.actions.icon"="upload-cloud"
 LABEL "com.github.actions.color"="purple"
 
 COPY . .
-RUN apk add --no-cache ssh-client
+RUN apk add --no-cache openssh
 RUN apk add --no-cache bash
 RUN apk add --no-cache git
 RUN chmod +x /entrypoint.sh
