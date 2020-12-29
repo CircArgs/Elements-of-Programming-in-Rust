@@ -2,6 +2,8 @@
 
 git config --global user.email "quebecname@gmail.com"
 git config --global user.name "CircArgs"
+
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 eval "$(ssh-agent -s)"
 ssh-add - <<< "${SSH_PRIVATE_KEY}"
 
