@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-git config --global user.email ""
+git config --global user.email "quebecname@gmail.com"
 git config --global user.name "CircArgs"
 
 git clone --single-branch --branch docs git@github.com:CircArgs/Elements-of-Programming-in-Rust.git ./cloned
