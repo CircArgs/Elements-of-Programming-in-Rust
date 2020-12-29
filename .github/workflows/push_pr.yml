@@ -43,9 +43,8 @@ jobs:
       - name: Checking out code...
         id: checkout
         uses: actions/checkout@master
-      - uses: webfactory/ssh-agent@v0.4.1
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: docs
         id: docs
         uses: ./.github/actions/documentation
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

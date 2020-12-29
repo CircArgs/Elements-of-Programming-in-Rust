@@ -2,6 +2,8 @@
 
 git config --global user.email "quebecname@gmail.com"
 git config --global user.name "CircArgs"
+eval "$(ssh-agent -s)"
+ssh-add - <<< "${SSH_PRIVATE_KEY}"
 
 git clone --single-branch --branch docs git@github.com:CircArgs/Elements-of-Programming-in-Rust.git ./cloned
 cd cloned
