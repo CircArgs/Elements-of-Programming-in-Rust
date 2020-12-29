@@ -3,7 +3,6 @@
 git config --global user.email ""
 git config --global user.name "CircArgs"
 
-
 git clone --single-branch --branch docs git@github.com:CircArgs/Elements-of-Programming-in-Rust.git ./cloned
 cd cloned
 rm -rf docs
