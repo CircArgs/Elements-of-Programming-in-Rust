@@ -31,6 +31,7 @@ impl Solution1 {
 
 macro_rules! parity1 {
     ($t: ty) => {
+        /// implementation of Parity for solution 1
         impl Parity<$t> for Solution1 {
             fn parity(&mut self, x: $t) -> u8 {
                 if x == 0 {
@@ -65,6 +66,7 @@ impl<T: From<usize>> Solution2<T> {
 
 macro_rules! parity2 {
     ($t: ty) => {
+        /// implementation of Parity for solution 2
         impl Parity<$t> for Solution2<$t> {
             fn parity(&mut self, x: $t) -> u8 {
                 let mut ret = x ^ (x >> (self.n_bits / 2));
@@ -110,6 +112,7 @@ impl<K, T> Solution3<K, T> {
 
 macro_rules! parity3 {
     ($t: ty) => {
+        /// implementation of Parity for solution 3
         impl<K> Parity<$t> for Solution3<K, $t> {
             fn parity(&mut self, x: $t) -> u8 {
                 let k_size = n_bits::<K>();
