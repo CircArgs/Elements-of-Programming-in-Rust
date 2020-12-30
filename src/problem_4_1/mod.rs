@@ -29,17 +29,25 @@ impl Solution1 {
     }
 }
 
-impl Parity<usize> for Solution1 {
-    fn parity(&mut self, x: usize) -> u8 {
-        if x == 0 {
-            //base case parity of 0 is 0
-            0
-        } else {
-            //get lowest bit's parity and `XOR` it with rest
-            ((x & 1) as u8) ^ self.parity(x >> 1)
+macro_rules! parity1 {
+    ($t: ty) => {
+        impl Parity<$t> for Solution1 {
+            fn parity(&mut self, x: $t) -> u8 {
+                if x == 0 {
+                    //base case parity of 0 is 0
+                    0
+                } else {
+                    //get lowest bit's parity and `XOR` it with rest
+                    ((x & 1) as u8) ^ self.parity(x >> 1)
+                }
+            }
         }
-    }
+    };
 }
+
+parity1!(usize);
+
+
 
 /// iteratively fold a word in half `XOR`'ing all the way
 /// **NO** dynamic prog lookup in hashmap
@@ -55,17 +63,25 @@ impl<T: From<usize>> Solution2<T> {
     }
 }
 
-impl Parity<usize> for Solution2<usize> {
-    fn parity(&mut self, x: usize) -> u8 {
-        let mut ret = x ^ (x >> (self.n_bits / 2));
-        let mut i = self.n_bits / 4;
-        while i >= 1 {
-            ret ^= ret >> i;
-            i /= 2;
+macro_rules! parity2 {
+    ($t: ty) => {
+        impl Parity<$t> for Solution2<$t> {
+            fn parity(&mut self, x: $t) -> u8 {
+                let mut ret = x ^ (x >> (self.n_bits / 2));
+                let mut i = self.n_bits / 4;
+                while i >= 1 {
+                    ret ^= ret >> i;
+                    i /= 2;
+                }
+                (ret & 1) as u8
+            }
         }
-        (ret & 1) as u8
-    }
+    };
 }
+
+parity2!(usize);
+
+
 
 /// iteratively fold a word in half `XOR`'ing all the way
 /// **YES** dynamic prog lookup in hashmap
@@ -92,28 +108,36 @@ impl<K, T> Solution3<K, T> {
     }
 }
 
-impl<K> Parity<usize> for Solution3<K, usize> {
-    fn parity(&mut self, x: usize) -> u8 {
-        let k_size = n_bits::<K>();
-        let mut ret = x ^ (x >> (self.n_bits / 2));
-        let mut i = self.n_bits / 4;
-        while i >= 1 {
-            if i <= k_size {
-                match self.map.get(&ret) {
-                    Some(p) => {
-                        return *p;
-                    }
-                    None => {
-                        let parity = self._helper.parity(ret);
-                        self.map.insert(ret, parity);
-                        return parity;
+macro_rules! parity3 {
+    ($t: ty) => {
+        impl<K> Parity<$t> for Solution3<K, $t> {
+            fn parity(&mut self, x: $t) -> u8 {
+                let k_size = n_bits::<K>();
+                let mut ret = x ^ (x >> (self.n_bits / 2));
+                let mut i = self.n_bits / 4;
+                while i >= 1 {
+                    if i <= k_size {
+                        match self.map.get(&ret) {
+                            Some(p) => {
+                                return *p;
+                            }
+                            None => {
+                                let parity = self._helper.parity(ret);
+                                self.map.insert(ret, parity);
+                                return parity;
+                            }
+                        }
                     }
                 }
+                (ret & 1) as u8
             }
         }
-        (ret & 1) as u8
-    }
+    };
 }
+
+parity3!(usize);
+
+
 
 #[cfg(test)]
 mod tests {
