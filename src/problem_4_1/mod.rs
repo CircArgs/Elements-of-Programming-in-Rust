@@ -20,6 +20,28 @@ trait Parity<T> {
     fn parity(&mut self, x: T) -> u8;
 }
 
+struct StringSolution{}
+impl StringSolution{
+    fn new()->Self{
+        StringSolution{}
+    }
+}
+
+macro_rules! string_parity {
+    ($t: ty) => {
+        /// implementation of Parity for String solution
+        /// iterate through the string and count the number of 1s and then send back whether the count is odd or even
+        impl Parity<$t> for StringSolution {
+            fn parity(&mut self, x: $t) -> u8 {
+                let s = format!("{:b}", x);
+                s.chars().map(|c| if c=='1' {1} else {0}).sum::<u8>()%2
+            }
+        }
+    };
+}
+
+string_parity!(usize);
+
 /// recursively compute the parity of right shifted subwords
 /// **NO** dynamic prog lookup in hashmap
 struct Solution1 {}
@@ -32,6 +54,7 @@ impl Solution1 {
 macro_rules! parity1 {
     ($t: ty) => {
         /// implementation of Parity for solution 1
+        /// recursively pull the lowest bit off and xor it with the parity of the remainder of the word
         impl Parity<$t> for Solution1 {
             fn parity(&mut self, x: $t) -> u8 {
                 if x == 0 {
@@ -67,6 +90,8 @@ impl<T: From<usize>> Solution2<T> {
 macro_rules! parity2 {
     ($t: ty) => {
         /// implementation of Parity for solution 2
+        /// ex. fold 32 bits into two 16 bit sequences and xor them, then repeat to 8, 4, 2, 1, done
+        /// 0 = parity of 11010100 = parity of 1101 XOR 0100 = 1001 = parity of 10 XOR 01 = 11 = 1 XOR 1 = 0
         impl Parity<$t> for Solution2<$t> {
             fn parity(&mut self, x: $t) -> u8 {
                 let mut ret = x ^ (x >> (self.n_bits / 2));
@@ -113,6 +138,7 @@ impl<K, T> Solution3<K, T> {
 macro_rules! parity3 {
     ($t: ty) => {
         /// implementation of Parity for solution 3
+        /// same as solution 2 but starts attempting to lookup results once the size of the folding reaches the size of type K
         impl<K> Parity<$t> for Solution3<K, $t> {
             fn parity(&mut self, x: $t) -> u8 {
                 let k_size = n_bits::<K>();
@@ -147,10 +173,11 @@ mod tests {
     use super::*;
     #[test]
     fn test_sols() {
+        let mut string_sol = StringSolution::new();
         let mut sol1 = Solution1::new();
         let mut sol2: Solution2<usize> = Solution2::new();
         let mut sol3: Solution3<u16, usize> = Solution3::new();
-        let mut sols: Vec<&mut dyn Parity<usize>> = vec![&mut sol1, &mut sol2, &mut sol3];
+        let mut sols: Vec<&mut dyn Parity<usize>> = vec![&mut string_sol];//, &mut sol1, &mut sol2, &mut sol3];
         for sol in sols.iter_mut() {
             assert_eq!(sol.parity(usize::from_str_radix("01", 2).unwrap()), 1);
             assert_eq!(
