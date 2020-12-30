@@ -54,7 +54,9 @@ jobs:
         components: rustfmt, rust-src
 
     - name: Build Documentation
-      run: cargo doc --all --no-deps --document-private-items
+      run: |
+        cargo doc --all --no-deps --document-private-items
+        echo "<head><meta http-equiv=\"refresh\" content=\"0; URL=./doc/Elements_of_Programming_in_Rust/index.html\" /></head><body>hello</body>" >> ./target/doc/index.html
 
     - name: Deploy Docs
       uses: peaceiris/actions-gh-pages@364c31d33bb99327c77b3a5438a83a357a6729ad # v3.4.0
