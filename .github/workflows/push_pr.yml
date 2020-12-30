@@ -37,29 +37,29 @@ jobs:
         with:
           file: ${{ steps.coverage.outputs.report }}
           fail_ci_if_error: true # optional (default = false)
-  docs:
+          
+  rustdoc:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checking out code...
-        id: checkout
-        uses: actions/checkout@master
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: doc
-          args: --no-deps --document-private-items --target-dir ../docs_new
-      - run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch origin
-          git checkout docs
-          rm -rf docs
-          mv ../docs_new docs
-          echo "<head><meta http-equiv=\"refresh\" content=\"0; URL=./doc/Elements_of_Programming_in_Rust/index.html\" /></head><body>hello</body>" >> ./docs/index.html
-          git add .
-          git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          git commit -m "docs for commit hash $git_hash"
-          git push
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+        components: rustfmt, rust-src
+
+    - name: Build Documentation
+      run: cargo doc --all --no-deps
+
+    - name: Deploy Docs
+      uses: peaceiris/actions-gh-pages@364c31d33bb99327c77b3a5438a83a357a6729ad # v3.4.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: docs
+        publish_dir: ./target/doc
+        force_orphan: true
