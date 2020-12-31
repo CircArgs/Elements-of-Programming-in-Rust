@@ -19,7 +19,7 @@ fn n_bits<T>() -> usize {
 trait Parity<T> {
     fn parity(&mut self, x: T) -> u8;
 }
-
+/// a naive solution using strings
 struct StringSolution{}
 impl StringSolution{
     fn new()->Self{
@@ -172,7 +172,7 @@ parity3!(usize);
 mod tests {
     use super::*;
     #[test]
-    fn test_sols() {
+    fn test_pairty_sols() {
         let mut string_sol = StringSolution::new();
         let mut sol1 = Solution1::new();
         let mut sol2: Solution2<usize> = Solution2::new();
