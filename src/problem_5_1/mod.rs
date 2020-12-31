@@ -1,11 +1,15 @@
+//! Tns Dutch National Flag Problem
 //! Write a program that takes an array A and an index i into A, and rearranges the elements such
 //! that all elements less than A[r] (the "pivot") appear first, followed by elements equal to the pivot,
 //! followed by elements greater than the pivot.
 //! Hinf: Think about the partition step in quicksort.
 
-//! the documentation for the slice primitive comes in handy
-//! https://doc.rust-lang.org/std/primitive.slice.html
-//! 
+//! [the documentation for the slice primitive comes in handy](https://doc.rust-lang.org/std/primitive.slice.html)
+
+/// the solution keeps track of two pivot points to know the "middle stripe" start and end
+/// starting from the beginning it moves larger elements to the end and equal elements to the middle stripe
+/// then works on the back half to move smaller elements to the beginning
+/// all while making sure not to disturb remaining elements in the start or end loops
 fn flag_sort<T: Ord + std::fmt::Debug>(slice: &mut [T], pivot: usize){
     // base case if the slice is 0 or 1 elements it is already arranged
     if slice.len()<2{return;}
