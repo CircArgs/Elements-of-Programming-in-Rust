@@ -1,8 +1,8 @@
-//! ### The Dutch National Flag Problem
+//! EOPI pg 39. The Dutch National Flag Problem
 //! Write a program that takes an array slice and an index i into slice, and rearranges the elements such
 //! that all elements less than slice[r] (the "pivot") appear first, followed by elements equal to the pivot,
 //! followed by elements greater than the pivot.
-//! Hinf: Think about the partition step in quicksort.
+//! Hint: Think about the partition step in quicksort.
 
 //! [the documentation for the slice primitive comes in handy](https://doc.rust-lang.org/std/primitive.slice.html)
 
@@ -78,8 +78,7 @@ fn flag_sort_naive<T: Ord>(slice: &mut [T], pivot: usize) {
 }
 
 /// sorts a slice of elements implementing Ord
-/// iterates through the slice twice - forwards moving elements less than the pivot to the front
-/// - backwards moving elements greater than the pivot to the end of the slice.
+/// iterates through the slice twice - forwards moving elements less than the pivot to the front; backwards moving elements greater than the pivot to the end of the slice.
 /// the position of the pivot must be tracked in order to have the pivot value to compare to without having T implement Copy
 /// also for the recursive subslicing to work excluding elements equal to the pivot value
 /// unlike `flag_sort_naive` the partitioning takes O(n) time since it iterated through the array twice once from the beginning and once from the rear (and two more short iterations from the final pivot location)
@@ -153,30 +152,6 @@ fn flag_sort<T: Ord>(slice: &mut [T], pivot: usize) {
     flag_sort(&mut slice[(start + right + 1)..], pivot / 2);
 }
 
-fn flag_part_naive<T: Ord + Clone>(slice: &mut [T], pivot: usize) {
-    let pivot = pivot.min(slice.len() - 1);
-    let pivot_val = slice[pivot].clone();
-    for i in 0..slice.len() {
-        for j in (i + 1)..slice.len() {
-            if slice[j] < pivot_val {
-                slice.swap(i, j);
-                break;
-            }
-        }
-    }
-    for i in (0..slice.len()).rev() {
-        if slice[i] < pivot_val {
-            break;
-        };
-        for j in (0..i).rev() {
-            if slice[j] > pivot_val {
-                slice.swap(i, j);
-                break;
-            }
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -201,12 +176,5 @@ mod tests {
                 assert_eq!(things2, sol);
             }
         }
-    }
-
-    #[test]
-    fn test_flag_part_naive() {
-        let mut things = vec![8, 6, 7, 5, 5, 6, 5, 3, 0, 9];
-        flag_part_naive(&mut things, 3);
-        assert_eq!(things, &[3, 0, 5, 5, 5, 7, 9, 6, 8, 6]);
     }
 }
