@@ -4,3 +4,6 @@ version = "0.1.0"
 authors = ["CircArgs <quebecname@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/CircArgs/Elements-of-Programming-in-Rust"
+
+[dependencies]
+num = "0.3.0"
