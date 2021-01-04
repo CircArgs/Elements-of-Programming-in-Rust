@@ -142,8 +142,8 @@ macro_rules! parity3 {
         impl<K> Parity<$t> for Solution3<K, $t> {
             fn parity(&mut self, x: $t) -> u8 {
                 let k_size = n_bits::<K>();
-                let mut ret = x ^ (x >> (self.n_bits / 2));
-                let mut i = self.n_bits / 4;
+                let ret = x ^ (x >> (self.n_bits / 2));
+                let i = self.n_bits / 4;
                 while i >= 1 {
                     if i <= k_size {
                         match self.map.get(&ret) {
@@ -174,9 +174,9 @@ mod tests {
     #[test]
     fn test_pairty_sols() {
         let mut string_sol = StringSolution::new();
-        let mut sol1 = Solution1::new();
-        let mut sol2: Solution2<usize> = Solution2::new();
-        let mut sol3: Solution3<u16, usize> = Solution3::new();
+        let _sol1 = Solution1::new();
+        let _sol2: Solution2<usize> = Solution2::new();
+        let _sol3: Solution3<u16, usize> = Solution3::new();
         let mut sols: Vec<&mut dyn Parity<usize>> = vec![&mut string_sol];//, &mut sol1, &mut sol2, &mut sol3];
         for sol in sols.iter_mut() {
             assert_eq!(sol.parity(usize::from_str_radix("01", 2).unwrap()), 1);
