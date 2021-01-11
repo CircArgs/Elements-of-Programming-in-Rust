@@ -61,8 +61,8 @@ fn string_to_integer(s: &str) -> i64 {
     ret
 }
 
-// Integer to String
-// will use i64 for convenience
+/// Integer to String
+/// will use i64 for convenience
 fn int_to_string(x: i64) -> String {
     // create a local copy of x to work on. will need to mutate for this method
     let mut x = x;
