@@ -7,3 +7,6 @@ repository = "https://github.com/CircArgs/Elements-of-Programming-in-Rust"
 
 [dependencies]
 num = "0.3.0"
+
+[unstable]
+cell-leak = 'yes'
