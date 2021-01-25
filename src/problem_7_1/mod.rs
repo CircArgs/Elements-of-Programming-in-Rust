@@ -18,14 +18,17 @@ fn merge_sorted_lists<T: Ord + Clone>(
     loop {
         match (i1, i2) {
             (None, None) => break,
+            // finished with list 1 then add all list 2
             (None, Some(n2)) => {
                 i2 = l2iter.next();
                 ret.push_back(n2.clone());
             }
+            // finished with list 2 then add all list 1
             (Some(n1), None) => {
                 i1 = l1iter.next();
                 ret.push_back(n1.clone());
             }
+            // add the smalled value and increment it's respective iterator
             (Some(n1), Some(n2)) => {
                 if n1 < n2 {
                     i1 = l1iter.next();
