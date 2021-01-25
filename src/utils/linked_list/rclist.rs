@@ -7,23 +7,25 @@
 use std::cell::{Ref, RefCell, RefMut};
 use std::rc::Rc;
 
-type Link<T> = Option<Rc<Node<T>>>;
+type LinkValue<T> = Rc<Node<T>>;
+type Link<T> = Option<LinkValue<T>>;
 
 pub struct List<T> {
     head: Link<T>,
 }
 
-struct Node<T> {
-    elem: RefCell<T>,
+pub struct Node<T> {
+    pub elem: RefCell<T>,
     next: Link<T>,
 }
 
 impl<T> List<T> {
-    fn new() -> Self {
+    pub fn new() -> Self {
         List { head: None }
     }
+
     ///pushes an element onto the front of the list mutating it in place
-    fn push_mut(&mut self, elem: T) {
+    pub fn push_mut(&mut self, elem: T) {
         let head = self.head.clone();
         let new = Rc::new(Node {
             elem: RefCell::new(elem),
@@ -31,8 +33,9 @@ impl<T> List<T> {
         });
         self.head.replace(new);
     }
+
     ///pushes an element onto the front of the list and returns a new list (including the original as the tail)
-    fn push(&self, elem: T) -> Self {
+    pub fn push(&self, elem: T) -> Self {
         List {
             head: Some(Rc::new(Node {
                 elem: RefCell::new(elem),
@@ -41,15 +44,15 @@ impl<T> List<T> {
         }
     }
 
-    fn tail(&self) -> Self {
+    pub fn tail(&self) -> Self {
         let tail = self.head.as_ref().and_then(|head| head.next.clone());
 
         List { head: tail }
     }
-    fn head(&self) -> Option<Ref<T>> {
+    pub fn head(&self) -> Option<Ref<T>> {
         self.head.as_ref().map(|head| head.elem.borrow())
     }
-    fn iter<'a, I: From<&'a List<T>>>(&'a self) -> I {
+    pub fn iter<'a, I: From<&'a List<T>>>(&'a self) -> I {
         I::from(self)
     }
 }
@@ -111,6 +114,29 @@ impl<'a, T> Iterator for IterMut<'a, T> {
         })
     }
 }
+
+// // link iterator
+// pub struct LinkIter<T> {
+//     next: Option<LinkValue<T>>,
+// }
+
+// impl<T> Iterator for LinkIter<T> {
+//     type Item = LinkValue<T>;
+
+//     fn next(&mut self) -> Option<Self::Item> {
+//         let ret = self.next.clone();
+//         self.next = ret.as_ref().and_then(|curr| curr.next.clone());
+//         ret
+//     }
+// }
+
+// impl<'a, T> From<&'a List<T>> for LinkIter<T> {
+//     fn from(list: &'a List<T>) -> LinkIter<T> {
+//         LinkIter {
+//             next: list.head.as_ref().map(|head| head.clone()),
+//         }
+//     }
+// }
 
 #[cfg(test)]
 mod test {
