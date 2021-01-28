@@ -6,6 +6,8 @@
 // use crate::utils::linked_list::rclist::{Iter, List};
 use std::collections::LinkedList;
 
+/// two lists of items that are orderable and clonable (could be `Rc<T:Ord>`)
+/// list are already sorted: return new list of elements of both lists still sorted
 fn merge_sorted_lists<T: Ord + Clone>(
     list1: &LinkedList<T>,
     list2: &LinkedList<T>,
@@ -15,7 +17,9 @@ fn merge_sorted_lists<T: Ord + Clone>(
     let mut i1 = l1iter.next();
     let mut i2 = l2iter.next();
     let mut ret = LinkedList::new();
+    // looping while some list still has elements
     loop {
+        // 4 possibilities either one (x2), both, neither have an element left
         match (i1, i2) {
             (None, None) => break,
             // finished with list 1 then add all list 2
@@ -28,7 +32,7 @@ fn merge_sorted_lists<T: Ord + Clone>(
                 i1 = l1iter.next();
                 ret.push_back(n1.clone());
             }
-            // add the smalled value and increment it's respective iterator
+            // add the smaller value and increment it's respective iterator
             (Some(n1), Some(n2)) => {
                 if n1 < n2 {
                     i1 = l1iter.next();
