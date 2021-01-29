@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Elements_of_Programming_in_Rust` crate."><meta name="keywords" content="rust, rustlang, rust-lang, Elements_of_Programming_in_Rust"><title>Elements_of_Programming_in_Rust - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../Elements_of_Programming_in_Rust/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate Elements_of_Programming_in_Rust</p><div class="block version"><p>Version 0.1.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all Elements_of_Programming_in_Rust's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class="location"></p><script>window.sidebarCurrent = {name: "Elements_of_Programming_in_Rust", ty: "mod", relpath: "../"};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/Elements_of_Programming_in_Rust/lib.rs.html#1-7" title="goto source code">[src]</a></span><span class="in-band">Crate <a class="mod" href="">Elements_of_Programming_in_Rust</a></span></h1><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<table><tr class="module-item"><td><a class="mod" href="problem_4_1/index.html" title="Elements_of_Programming_in_Rust::problem_4_1 mod">problem_4_1</a></td><td class="docblock-short"><p>EoPI pg 24
+The parity of a binary word is 1 if the number of 1s in the word is odd; otherwise, it is 0.
+For example, the parity of 1011 is 1, and the parity of 10001000 is 0.
+Parity checks are used to detect single bit errors in data storage and communication.
+It is fairly straightforward to write code that computes the parity of a single 64-bit word.
+How would you compute the parity of a very large number of 64-bit words?
+Hint: Use a lookup table, but don't use 2^64 entries!</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="problem_5_1/index.html" title="Elements_of_Programming_in_Rust::problem_5_1 mod">problem_5_1</a></td><td class="docblock-short"><p>EOPI pg 39. The Dutch National Flag Problem
+Write a program that takes an array slice and an index i into slice, and rearranges the elements such
+that all elements less than slice[r] (the &quot;pivot&quot;) appear first, followed by elements equal to the pivot,
+followed by elements greater than the pivot.
+Hint: Think about the partition step in quicksort.
+<a href="https://doc.rust-lang.org/std/primitive.slice.html">the documentation for the slice primitive comes in handy</a></p>
+</td></tr><tr class="module-item"><td><a class="mod" href="problem_5_6/index.html" title="Elements_of_Programming_in_Rust::problem_5_6 mod">problem_5_6</a></td><td class="docblock-short"><p>EoPI pg 46 Buy and sell a stock once
+This problem is concerned with the problem of optimally buying and selling a stock once,
+as described on Page 2. As an example, consider the following sequence of stock prices:
+&lt;31.0,31.5,275,295,260,270,290,230,255,250&gt;. The maximum profit that can be made with one buy
+and one sell is 30-buy at 260 and sell at 290. Note that 250 is not the lowest price, nor 290 the
+highest price.
+46Write
+program that takes an array denoting the daily stock price, and retums the maximum profit
+that could be made by buying and then selling one share of that stock. There is no need to buy if
+a
+no profit is possible.
+Hint:ldentifying the minimum and maximum
+height. Focus on valid differences.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="problem_6_1/index.html" title="Elements_of_Programming_in_Rust::problem_6_1 mod">problem_6_1</a></td><td class="docblock-short"><p>EoPI pg 68 Interconvert Strings and Integers
+In this problem, you are to irnplement methods that take a string representing an integer and retum
+the corresponding integer, and vice versa. Your code should handle negative integers. You cannot
+use library functions like int in Python.
+Implement an integer to string conversion function, and a string to integer conversison function,
+For example, if the input to the first function is the integer 314,it should retum the string &quot;31.4&quot; and
+if the input to the second function is the string &quot;314&quot; it should return the integer 314.
+Hint: Build the result one digit at a time.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="problem_7_1/index.html" title="Elements_of_Programming_in_Rust::problem_7_1 mod">problem_7_1</a></td><td class="docblock-short"><p>7.1 Merge two sorted lists
+Consider two singly linked lists in which each node holds a number. Assume the lists are sorted,
+i.e., numbers in the lists appear in ascending order within each list. The merge of the two lists is a
+list consisting of the nodes of the two lists in which numbers appear in ascending order</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="problem_8_1/index.html" title="Elements_of_Programming_in_Rust::problem_8_1 mod">problem_8_1</a></td><td class="docblock-short"><p>8.1 Implement a stack with a max api
+Design a stack that includes a max operation, in addition to push and pop. The max method should
+return the maximum value stored in the stack.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="utils/index.html" title="Elements_of_Programming_in_Rust::utils mod">utils</a></td><td class="docblock-short"></td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "Elements_of_Programming_in_Rust";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

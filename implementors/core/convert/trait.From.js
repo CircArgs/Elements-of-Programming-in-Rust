@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["Elements_of_Programming_in_Rust"] = [{"text":"impl&lt;'a, T&gt; From&lt;&amp;'a List&lt;T&gt;&gt; for Iter&lt;'a, T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a, T&gt; From&lt;&amp;'a List&lt;T&gt;&gt; for IterMut&lt;'a, T&gt;","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["Elements_of_Programming_in_Rust"] = [{"text":"impl&lt;T&gt; Drop for List&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T&gt; Drop for Rc&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T, '_&gt; Drop for Ref&lt;'_, T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T, '_&gt; Drop for RefMut&lt;'_, T&gt;","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

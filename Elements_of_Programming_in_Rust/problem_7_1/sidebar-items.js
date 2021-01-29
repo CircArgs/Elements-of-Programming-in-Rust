@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["merge_sorted_lists","two lists of items that are orderable and clonable (could be `Rc<T:Ord>`) list are already sorted: return new list of elements of both lists still sorted"]]});

@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/problem_5_6/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../Elements_of_Programming_in_Rust/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
+<span id="2"> 2</span>
+<span id="3"> 3</span>
+<span id="4"> 4</span>
+<span id="5"> 5</span>
+<span id="6"> 6</span>
+<span id="7"> 7</span>
+<span id="8"> 8</span>
+<span id="9"> 9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! EoPI pg 46 Buy and sell a stock once</span>
+<span class="doccomment">//! This problem is concerned with the problem of optimally buying and selling a stock once,</span>
+<span class="doccomment">//! as described on Page 2. As an example, consider the following sequence of stock prices:</span>
+<span class="doccomment">//! &lt;31.0,31.5,275,295,260,270,290,230,255,250&gt;. The maximum profit that can be made with one buy</span>
+<span class="doccomment">//! and one sell is 30-buy at 260 and sell at 290. Note that 250 is not the lowest price, nor 290 the</span>
+<span class="doccomment">//! highest price.</span>
+<span class="doccomment">//! 46Write</span>
+<span class="doccomment">//! program that takes an array denoting the daily stock price, and retums the maximum profit</span>
+<span class="doccomment">//! that could be made by buying and then selling one share of that stock. There is no need to buy if</span>
+<span class="doccomment">//! a</span>
+<span class="doccomment">//! no profit is possible.</span>
+<span class="doccomment">//! Hint:ldentifying the minimum and maximum</span>
+<span class="doccomment">//! height. Focus on valid differences.</span>
+
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Zero</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Sub</span>;
+
+<span class="doccomment">/// the primary solution</span>
+<span class="doccomment">/// takes a slice `&amp;[T]` and returns a T</span>
+<span class="doccomment">/// where references to T can be subtracted (`impl Sub for &amp;T {type Output = T}`) and are orderable (`impl Ord for T`)</span>
+<span class="doccomment">/// the solution iterates through the slice once and for each element iterates through the remainder of the slice</span>
+<span class="doccomment">/// for each element of the inner loop it find the difference which is the amount gained from selling</span>
+<span class="doccomment">/// if a better result is found than what is currently had then that becomes the new solution</span>
+<span class="kw">fn</span> <span class="ident">buy_sell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">prices</span>: <span class="kw-2">&amp;</span>[<span class="ident">T</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>
+<span class="kw">where</span>
+    <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>: <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">Ord</span> <span class="op">+</span> <span class="ident">Zero</span>,
+{
+    <span class="comment">// track the soltuion</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">best</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+    <span class="comment">// iterate through all prices</span>
+    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">prices</span>.<span class="ident">len</span>() {
+        <span class="comment">// and for each price following it take the difference to see what the profit would be</span>
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> (<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>)..<span class="ident">prices</span>.<span class="ident">len</span>() {
+            <span class="kw">let</span> <span class="ident">temp</span>: <span class="ident">T</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">prices</span>[<span class="ident">j</span>] <span class="op">-</span> <span class="kw-2">&amp;</span><span class="ident">prices</span>[<span class="ident">i</span>];
+            <span class="kw">match</span> <span class="ident">best</span> {
+                <span class="comment">// if the there is already a solution</span>
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="comment">// and the current one is better the current one `temp` is the new best profit</span>
+                    <span class="kw">if</span> <span class="ident">temp</span> <span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">d</span> {
+                        <span class="kw-2">*</span><span class="ident">d</span> <span class="op">=</span> <span class="ident">temp</span>;
+                    } <span class="comment">// else current best is still best</span>
+                }
+                <span class="comment">// anything positive is greater than nothing</span>
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">if</span> <span class="ident">temp</span> <span class="op">&gt;</span> <span class="ident">T</span>::<span class="ident">zero</span>() {
+                        <span class="ident">best</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">temp</span>);
+                    }
+                }
+            }
+        }
+    }
+    <span class="ident">best</span>.<span class="ident">unwrap</span>()
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_buy_sell</span>() {
+        <span class="kw">let</span> <span class="ident">prices</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+            (<span class="macro">vec</span><span class="macro">!</span>[<span class="number">310</span>, <span class="number">315</span>, <span class="number">275</span>, <span class="number">295</span>, <span class="number">260</span>, <span class="number">270</span>, <span class="number">290</span>, <span class="number">230</span>, <span class="number">255</span>, <span class="number">250</span>], <span class="number">30</span>),
+            (<span class="macro">vec</span><span class="macro">!</span>[<span class="number">8</span>, <span class="number">11</span>, <span class="number">6</span>, <span class="number">19</span>, <span class="number">25</span>, <span class="number">4</span>, <span class="number">35</span>, <span class="number">15</span>], <span class="number">31</span>),
+        ];
+        <span class="kw">for</span> (<span class="ident">ps</span>, <span class="ident">ss</span>) <span class="kw">in</span> <span class="ident">prices</span> {
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">buy_sell</span>(<span class="kw-2">&amp;</span><span class="ident">ps</span>), <span class="ident">ss</span>);
+        }
+    }
+}
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "Elements_of_Programming_in_Rust";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
